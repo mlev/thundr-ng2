@@ -18,31 +18,25 @@ namespace App {
         }
     }
 
-    class TemplateCacheBuster {
+    function TemplateCacheBuster($provide: ng.auto.IProvideService) {
 
-        public static $inject = ["$provide"];
+        const CACHE_BUST = Date.now().toString();
+        const templateFactoryDecorator = ($delegate) => {
 
-        constructor($provide: ng.auto.IProvideService) {
+            let fromUrl = angular.bind($delegate, $delegate.fromUrl);
+            $delegate.fromUrl = (url, params) => {
 
-            const cacheBuster = Date.now().toString();
+                // Check is to avoid breaking AngularUI ui-bootstrap-tpls.js: "uib/template/accordion/accordion-group.html"
+                if (_.isString(url) && url.indexOf("uib/template/") === -1) {
+                    url = App.AppUtils.cacheBustUrl(url, CACHE_BUST);
+                }
 
-            function templateFactoryDecorator($delegate) {
-                let fromUrl = angular.bind($delegate, $delegate.fromUrl);
-                $delegate.fromUrl = (url, params) => {
-                    if (url !== null && angular.isDefined(url) && angular.isString(url)) {
-                        url += (url.indexOf("?") === -1 ? "?" : "&");
-                        url += "v=" + cacheBuster;
-                    }
+                return fromUrl(url, params);
+            };
+            return $delegate;
+        };
 
-                    return fromUrl(url, params);
-                };
-
-                return $delegate;
-            }
-
-            $provide.decorator("$templateFactory", ["$delegate", templateFactoryDecorator]);
-
-        }
+        $provide.decorator("$templateFactory", ["$delegate", templateFactoryDecorator]);
     }
 
     angular

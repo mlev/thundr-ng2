@@ -3,10 +3,14 @@ namespace App {
 
     export class HomeController {
 
-        public static $inject = [];
+        public name: string = "martin";
 
         constructor() {
             //
+        }
+
+        public abc() {
+            name = "abc";
         }
 
     }
