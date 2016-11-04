@@ -1,18 +1,13 @@
-namespace App {
-    "use strict";
+export class HomeController {
 
-    export class HomeController {
+    public name: string = "martin";
 
-        public name: string = "martin";
+    constructor() {
+        //
+    }
 
-        constructor() {
-            //
-        }
-
-        public abc() {
-            name = "abc";
-        }
-
+    public abc() {
+        this.name = "abc";
     }
 
 }

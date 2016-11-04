@@ -345,22 +345,22 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:static',
-        'create-generated-files',
-        'process-bower',
-        'typings',
-        'process-favicons',
-        'process-templates',
-        'process-images',
-        'process-fonts',
-        'process-css',
-        'process-js',
-        'process-layout',
-        'copy:docs'
+        // 'create-generated-files',
+        // 'process-bower',
+        // 'typings',
+        // 'process-favicons',
+        // 'process-templates',
+        // 'process-images',
+        // 'process-fonts',
+        // 'process-css',
+        // 'process-js',
+        // 'process-layout',
+        // 'copy:docs'
     ]);
 
     grunt.registerTask('test', [
-        'prepare-test',
-        'karma:singleRun'
+        // 'prepare-test',
+        // 'karma:singleRun'
     ]);
 
     grunt.registerTask('testWatch', [
@@ -411,8 +411,8 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('process-fonts', [
-        'copy:fonts',
-        'goog-webfont-dl'
+        'copy:fonts'
+        // 'goog-webfont-dl'
     ]);
 
     grunt.registerTask('process-templates', [
@@ -425,13 +425,13 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('process-images', [
-        'copy:images'
+        // 'copy:images'
     ]);
 
-    grunt.registerTask('create-generated-files', function () {
-        grunt.file.write('src/main/webapp/WEB-INF/tags/generated-css.html', '<!-- bower:css -->\n<!-- endbower -->\n<!-- injector:css -->\n<!-- endinjector -->');
-        grunt.file.write('src/main/webapp/WEB-INF/tags/generated-js.html', '<!-- bower:js -->\n<!-- endbower -->\n<!-- injector:js -->\n<!-- endinjector -->');
-    });
+    // grunt.registerTask('create-generated-files', function () {
+    //     grunt.file.write('src/main/webapp/WEB-INF/tags/generated-css.html', '<!-- bower:css -->\n<!-- endbower -->\n<!-- injector:css -->\n<!-- endinjector -->');
+    //     grunt.file.write('src/main/webapp/WEB-INF/tags/generated-js.html', '<!-- bower:js -->\n<!-- endbower -->\n<!-- injector:js -->\n<!-- endinjector -->');
+    // });
 
     // Had to register another dynamic task to watch typescript files specifically for tests.
     // If there are other, more elegant solutions that run quickly then we can consider swapping out (e.g. https://github.com/sergeyt/karma-typescript-preprocessor)

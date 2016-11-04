@@ -1,13 +1,9 @@
-/// <reference path="../../../../typings/index.d.ts" />
+import * as angular from "angular";
+import uiRouter from "angular-ui-router";
 
-namespace App {
-    "use strict";
+angular.module("app", [uiRouter]);
 
-    angular
-        .module("app", [
-            "ngAnimate",
-            "ui.bootstrap",
-            "ui.router",
-            "LocalStorageModule"
-        ]);
-}
+
+import "../less/styles/home.less";
+import "./app.config";
+import "./app.routes";
