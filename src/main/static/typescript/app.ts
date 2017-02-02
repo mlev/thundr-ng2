@@ -2,13 +2,12 @@
 
 import * as angular from "angular";
 import "angular-ui-bootstrap";
-import "angular-ui-router";
+import uiRouter from "angular-ui-router";
 
-angular
-    .module("app", [
-        "ui.bootstrap",
-        "ui.router"
-    ]);
+angular.module("app", [
+    "ui.bootstrap",
+    uiRouter
+]);
 
 import "../less/styles/home.less";
 import "../less/styles/main.less";
