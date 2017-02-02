@@ -1,6 +1,6 @@
 import * as angular from "angular";
 import "angular-mocks";
-import "../../main/static/typescript/app";
+import "../../main/typescript/app";
 
 describe("appConfig", () => {
 

@@ -1,4 +1,4 @@
-/// <reference path="../../../../typings/index.d.ts" />
+/// <reference path="../../../typings/index.d.ts" />
 
 import * as angular from "angular";
 import "angular-ui-bootstrap";
@@ -9,7 +9,7 @@ angular.module("app", [
     uiRouter
 ]);
 
-import "../less/styles/home.less";
-import "../less/styles/main.less";
+import "../static/less/styles/home.less";
+import "../static/less/styles/main.less";
 import "./app.config";
 import "./app.routes";

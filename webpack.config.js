@@ -7,7 +7,8 @@ const process = require("process");
 const webpack = require("webpack");
 
 const basic = {
-    src: "src/main/static",
+    ts: "src/main/typescript",
+    assets: "src/main/static",
     webapp: "src/main/webapp",
     dist: "src/main/webapp/static"
 };
@@ -28,7 +29,7 @@ module.exports = () => {
     console.log("Running From DevServer: ", isDevServer);
 
     function copyAssets (assetType, allowedExtensions) {
-        const src = pathTo(basic.src);
+        const src = pathTo(basic.assets);
         return {
             context: src + "/" + assetType,
             from: "**/*." + allowedExtensions,
@@ -47,7 +48,7 @@ module.exports = () => {
     }
 
     return {
-        entry: pathTo(basic.src) + "/typescript/app.ts",
+        entry: pathTo(basic.ts) + "/app.ts",
         output: {
             path: pathTo(basic.webapp),
             publicPath: "/",
@@ -84,7 +85,7 @@ module.exports = () => {
                 copyAssets("templates", extensions.templates)
             ]),
             new FaviconsWebpackPlugin({
-                logo: pathTo(basic.src) + "/images/favicon/original.png",
+                logo: pathTo(basic.assets) + "/images/favicon/original.png",
                 prefix: "static/images/favicon/",
                 icons: {
                     android: false,
