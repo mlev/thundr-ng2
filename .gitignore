@@ -1,14 +1,5 @@
-/src/main/webapp/static
-src/main/webapp/WEB-INF/tags/generated-css.html
-src/main/webapp/WEB-INF/tags/generated-js.html
-
-# Ignore Intellij-generated js and map files from typescript
-src/main/static/typescript/**/*.js
-src/main/static/typescript/**/*.map
-src/test/typescript/**/*.js
-src/test/typescript/**/*.map
-
-
+src/main/webapp/static
+src/main/webapp/WEB-INF/tags/layout.tag
 target/
 classes/
 bin/
@@ -26,8 +17,6 @@ typings/
 *.iws
 .idea
 
-rebel.xml
-
 atlassian-ide-plugin.xml
 
 pom.xml.versionsBackup
@@ -39,7 +28,4 @@ test-output
 hs_err*
 hotspot.log
 
-# Appengine db, etc
-WEB-INF/appengine-generated
-
-
+rebel.xml
