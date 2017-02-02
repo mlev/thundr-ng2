@@ -30,5 +30,5 @@ MARTIN_123
 <div id="scripts">
 	${scripts}
 </div>
-<script type="text/javascript" src="/static/javascript/bundle.js?951a57ad9a5505e94e12"></script></body>
+<script type="text/javascript" src="/static/bundle.js?b56c1fc923adfea5357b"></script></body>
 </html>

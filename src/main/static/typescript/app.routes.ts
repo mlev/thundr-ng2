@@ -1,6 +1,6 @@
-import {HomeController} from "./controller/homeController";
 import * as angular from "angular";
 import {IStateProvider, IUrlRouterProvider} from "angular-ui-router";
+import {HomeController} from "./controller/homeController";
 
 class Routes {
 

@@ -1,82 +1,91 @@
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var CopyWebpackPlugin = require("copy-webpack-plugin");
-var FaviconsWebpackPlugin = require("favicons-webpack-plugin");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
-var HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
-var path = require("path");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
+const path = require("path");
+const process = require("process");
+const webpack = require("webpack");
 
-var extensions = {
-    fonts: '{css,eot,svg,ttf,woff,woff2,gif,png,jpg,jpeg}',
-    images: '{png,jpg,jpeg,gif,webp,svg}',
-    templates: 'html'
+const basic = {
+    src: "src/main/static",
+    webapp: "src/main/webapp",
+    dist: "src/main/webapp/static"
 };
 
-module.exports = function () {
+const extensions = {
+    fonts: "{css,eot,svg,ttf,woff,woff2,gif,png,jpg,jpeg}",
+    images: "{png,jpg,jpeg,gif,webp,svg}",
+    templates: "html"
+};
+
+function pathTo (folder) {
+    return path.resolve(__dirname, folder);
+}
+
+module.exports = () => {
 
     const isDevServer = !!process.argv.find((v) => v.indexOf('webpack-dev-server') !== -1);
     console.log("Running From DevServer: ", isDevServer);
 
-    function copyAssets(assetType, allowedExtensions) {
-        var src = './src/main/static/';
+    function copyAssets (assetType, allowedExtensions) {
+        const src = pathTo(basic.src);
         return {
-            context: src + assetType,
-            from: '**/*.' + allowedExtensions,
-            to: 'static/' + assetType
+            context: src + "/" + assetType,
+            from: "**/*." + allowedExtensions,
+            to: "static/" + assetType
         };
     }
 
-    function injectAssetsIntoLayoutTag() {
-        var tagsFolder = path.resolve(__dirname, "src/main/webapp/WEB-INF/tags");
+    function injectAssetsIntoLayoutTag () {
+        const tagsFolder = pathTo(basic.webapp) + "/WEB-INF/tags";
         return {
             alwaysWriteToDisk: isDevServer,
-            template: tagsFolder + '/layout.template.tag',
-            filename: tagsFolder + '/layout.tag',
+            template: tagsFolder + "/layout.template.tag",
+            filename: tagsFolder + "/layout.tag",
             hash: true
         }
     }
 
     return {
-        entry: './src/main/static/typescript/app.ts',
+        entry: pathTo(basic.src) + "/typescript/app.ts",
         output: {
-            path: path.resolve(__dirname, "src/main/webapp"),
-            publicPath: '/',
-            filename: 'static/javascript/bundle.js'
+            path: pathTo(basic.webapp),
+            publicPath: "/",
+            filename: "static/bundle.js"
         },
         resolve: {
-            extensions: ['.ts', '.js']
+            extensions: [".ts", ".js"]
         },
         module: {
             rules: [
-                {test: /\.ts$/, enforce: 'pre', loader: "tslint"},
-                {test: /\.less$/, loader: "style!css!less"},
-                {test: /\.ts$/, loaders: ['ng-annotate', 'ts-loader']},
-                {test: /\.tag$/, loader: "raw"},
-                {test: /\.woff/, loader: "file"},
-                {test: /\.woff2/, loader: "file"},
-                {test: /\.ttf$/, loader: "file"},
-                {test: /\.eot$/, loader: "file"},
-                {test: /\.svg$/, loader: "file"}
+                {test: /\.ts$/, enforce: "pre", loader: "tslint-loader"},
+                {test: /\.less$/, loader: "style-loader!css-loader!less-loader"},
+                {test: /\.ts$/, loaders: ["ng-annotate-loader", "ts-loader"]},
+                {test: /\.tag$/, loader: "raw-loader"},
+                {
+                    test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+                    loader: "file-loader?name=./static/fonts/[hash].[ext]"
+                }
             ]
         },
         devServer: {
-            contentBase: './src/main/webapp',
+            contentBase: basic.webapp,
             proxy: {
-                '!/static/**': {
-                    target: 'http://localhost:8081',
+                "!/static/**": {
+                    target: "http://localhost:8081",
                     secure: false
                 }
             }
         },
         plugins: [
-            new CleanWebpackPlugin(['./src/main/webapp/static']),
             new CopyWebpackPlugin([
-                copyAssets('fonts', extensions.fonts),
-                copyAssets('images', extensions.images),
-                copyAssets('templates', extensions.templates)
+                copyAssets("fonts", extensions.fonts),
+                copyAssets("images", extensions.images),
+                copyAssets("templates", extensions.templates)
             ]),
             new FaviconsWebpackPlugin({
-                logo: './src/main/static/images/favicon/original.png',
-                prefix: 'static/images/favicon/',
+                logo: pathTo(basic.src) + "/images/favicon/original.png",
+                prefix: "static/images/favicon/",
                 icons: {
                     android: false,
                     appleIcon: true,
@@ -92,6 +101,8 @@ module.exports = function () {
             }),
             new HtmlWebpackPlugin(injectAssetsIntoLayoutTag()),
             new HtmlWebpackHarddiskPlugin()
+            // Disable for now as slows down build a lot
+            // new webpack.optimize.UglifyJsPlugin()
         ]
     }
 };

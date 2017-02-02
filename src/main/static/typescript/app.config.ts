@@ -1,6 +1,6 @@
-import {AppUtils} from "./service/appUtils";
 import * as angular from "angular";
 import * as _ from "lodash";
+import {AppUtils} from "./service/appUtils";
 
 class IeCacheFix {
 
@@ -22,7 +22,7 @@ function TemplateCacheBuster($provide: ng.auto.IProvideService) {
     const CACHE_BUST = Date.now().toString();
     const templateFactoryDecorator = ($delegate) => {
 
-        let fromUrl = angular.bind($delegate, $delegate.fromUrl);
+        const fromUrl = angular.bind($delegate, $delegate.fromUrl);
         $delegate.fromUrl = (url, params) => {
 
             // Check is to avoid breaking AngularUI ui-bootstrap-tpls.js: "uib/template/accordion/accordion-group.html"
