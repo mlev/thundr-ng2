@@ -35,7 +35,7 @@
     "no-trailing-whitespace": false,
     "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-trailing-underscore"],
 
-
+    "no-console": false,
 
 
     "only-arrow-functions": false

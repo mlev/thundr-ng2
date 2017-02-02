@@ -1,3 +1,7 @@
+import "../../main/static/typescript/app";
+import * as angular from "angular";
+import "angular-mocks";
+
 describe("appConfig", () => {
 
     let $httpBackend;

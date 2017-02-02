@@ -1,9 +1,8 @@
 import {AppUtils} from "./service/appUtils";
 import * as angular from "angular";
+import * as _ from "lodash";
 
 class IeCacheFix {
-
-    public static $inject = ["$httpProvider"];
 
     constructor($httpProvider: ng.IHttpProvider) {
 
