@@ -48,7 +48,7 @@ module.exports = () => {
     }
 
     return {
-        entry: pathTo(basic.ts) + "/app.ts",
+        entry: pathTo(basic.ts) + "/main.ts",
         output: {
             path: pathTo(basic.webapp),
             publicPath: "/",
@@ -60,8 +60,23 @@ module.exports = () => {
         module: {
             rules: [
                 {test: /\.ts$/, enforce: "pre", loader: "tslint-loader"},
-                {test: /\.less$/, loader: "style-loader!css-loader!less-loader"},
-                {test: /\.ts$/, loaders: ["ng-annotate-loader", "ts-loader"]},
+                {
+                    test: /\.scss$/,
+                    use: [
+                        "style-loader",
+                        "css-loader?importLoaders=1",
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                plugins: function () {
+                                    return [require('autoprefixer')];
+                                }
+                            }
+                        },
+                        "sass-loader"
+                    ]
+                },
+                {test: /\.ts$/, use: ["ng-annotate-loader", "ts-loader"]},
                 {test: /\.tag$/, loader: "raw-loader"},
                 {
                     test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
@@ -79,6 +94,10 @@ module.exports = () => {
             }
         },
         plugins: [
+            new webpack.ContextReplacementPlugin(
+                /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+                path.resolve(__dirname, 'doesnotexist/')
+            ),
             new CopyWebpackPlugin([
                 copyAssets("fonts", extensions.fonts),
                 copyAssets("images", extensions.images),

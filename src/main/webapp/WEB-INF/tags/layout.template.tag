@@ -4,6 +4,7 @@
 <%@ attribute name="keywords" required="false"%>
 <%@ attribute name="styles" required="false"%>
 <%@ attribute name="scripts" required="false"%>
+<%@ attribute name="baseUrl" required="false"%>
 <%@ taglib prefix="t" uri="http://threewks.com/thundr/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
@@ -21,12 +22,12 @@
 	<meta property="og:type" content="website" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	${styles}
+	<base href="${baseUrl}">
 </head>
 <body <c:forEach items="${dynAttrs}" var="dynAttr">${dynAttr.key}="${dynAttr.value}"</c:forEach> >
 <div id="content">
 	<jsp:doBody/>
 </div>
-MARTIN_123
 <div id="scripts">
 	${scripts}
 </div>

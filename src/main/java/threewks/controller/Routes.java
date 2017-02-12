@@ -4,7 +4,7 @@ import com.threewks.thundr.route.Router;
 
 public class Routes {
 	public static void addRoutes(Router router) {
-		router.get("/", Controller.class, "home");
-		router.get("/api/test", Controller.class, "test");
+		router.get("/api/home/contact", HomeController.class, "contactDetails");
+		router.get("/**", HomeController.class, "home");
 	}
 }
