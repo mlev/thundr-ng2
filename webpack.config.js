@@ -52,7 +52,8 @@ module.exports = () => {
         output: {
             path: pathTo(basic.webapp),
             publicPath: "/",
-            filename: "static/bundle.js"
+            filename: 'static/[name].js',
+            chunkFilename: '[name]-[chunkhash].js',
         },
         resolve: {
             extensions: [".ts", ".js"]
@@ -94,10 +95,8 @@ module.exports = () => {
             }
         },
         plugins: [
-            new webpack.ContextReplacementPlugin(
-                /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
-                path.resolve(__dirname, 'doesnotexist/')
-            ),
+            createSeparateVendorChunk(),
+            fixWebpackWarningForAngular(),
             new CopyWebpackPlugin([
                 copyAssets("fonts", extensions.fonts),
                 copyAssets("images", extensions.images),
@@ -126,3 +125,18 @@ module.exports = () => {
         ]
     }
 };
+
+function fixWebpackWarningForAngular() {
+    // For https://github.com/angular/angular/issues/11580
+    return new webpack.ContextReplacementPlugin(
+        /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+        path.resolve(__dirname, 'doesnotexist/')
+    );
+}
+
+function createSeparateVendorChunk() {
+    return new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks: ({resource}) => /node_modules/.test(resource),
+    });
+}
