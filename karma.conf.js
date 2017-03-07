@@ -1,5 +1,9 @@
 var webpackConfig = require('./webpack.config')();
 
+// CommonsChunkPlugin not compatible with karma-webpack
+const commonsChunkPluginIndex = webpackConfig.plugins.findIndex(plugin => plugin.chunkNames);
+webpackConfig.plugins.splice(commonsChunkPluginIndex, 1);
+
 module.exports = function (config) {
     config.set({
 

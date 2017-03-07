@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "devDependencies": {
+    "@types/jasmine": "^2.5.43",
+    "@types/karma-jasmine": "0.0.29",
     "autoprefixer": "^6.7.2",
     "clean-webpack-plugin": "^0.1.15",
     "copy-webpack-plugin": "^4.0.0",
@@ -47,7 +49,8 @@
     "@angular/platform-browser-dynamic": "~2.4.0",
     "@angular/router": "~3.4.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.19",
-    "rxjs": "^5.1.0",
+    "@types/core-js": "^0.9.35",
+    "@types/lodash": "^4.14.54",
     "bootstrap": "^4.0.0-alpha.6",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
@@ -58,9 +61,8 @@
   "scripts": {
     "clean": "rm -rf ./src/main/webapp/static && rm -rf ./src/main/webapp/WEB-INF/tags/layout.tag",
     "dev": "webpack-dev-server",
-    "prebuild": "npm install && npm run clean && npm run typings",
+    "prebuild": "npm install && npm run clean",
     "build": "webpack",
-    "typings": "typings install",
     "test": "karma start karma.conf.js --single-run"
   }
 }

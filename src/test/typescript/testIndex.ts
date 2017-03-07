@@ -11,17 +11,15 @@ require("zone.js/dist/jasmine-patch");
 require("zone.js/dist/async-test");
 require("zone.js/dist/fake-async-test");
 
-// RxJS
-// require("rxjs/Rx");
-
-var testing = require("@angular/core/testing");
-var browser = require("@angular/platform-browser-dynamic/testing");
+const testing = require("@angular/core/testing");
+const browser = require("@angular/platform-browser-dynamic/testing");
 
 testing.TestBed.initTestEnvironment(
     browser.BrowserDynamicTestingModule,
     browser.platformBrowserDynamicTesting()
 );
 
+// Specs stored with code they are testing - not in "test" tree.
 requireAll(require.context("../../main/typescript", true, /spec.ts$/));
 
 function requireAll(requireContext: any): any {

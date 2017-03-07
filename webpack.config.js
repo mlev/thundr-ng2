@@ -120,7 +120,7 @@ module.exports = () => {
             }),
             new HtmlWebpackPlugin(injectAssetsIntoLayoutTag()),
             new HtmlWebpackHarddiskPlugin()
-            // Disable for now as slows down build a lot
+            // Disable for now as slows down build a lot - need to add just for prod
             // new webpack.optimize.UglifyJsPlugin()
         ]
     }
